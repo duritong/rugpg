@@ -3,7 +3,7 @@ Given /^an empty keyring$/ do
 end
 
 Given /^a public key$/ do
-  @public_key = "-----BEGIN PGP PUBLIC KEY BLOCK-----
+  @key = "-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1.4.10 (GNU/Linux)
 
 mQENBEw7PlUBCACoMGW6h5Wep0OgLgCw2zovEQVULIv1HG4CFc0jUehv+IsudZqJ
@@ -38,17 +38,37 @@ psGZs9aRcC663HmfwYkjod6GBWaFzlN9a2eIjODBqSj/T4t08vgI9FQCBUrcmDS/
 end
 
 When /^I import this key$/ do
-  unless File.exists?(@public_key)
-    @keyring.import_key(@public_key)
+  unless File.exists?(@key)
+    @keyring.import_key(@key)
   else
-    @keyring.import_key_from_file(@public_key)
+    @keyring.import_key_from_file(@key)
   end
 end
 
-Then /^the key should be in the keyring$/ do
-  @keyring.contains_publickey?('FBD5055E')
+Given /^I import keyfile (.*)$/ do |keyfile_nr|
+  @keyring.import_key_from_file(@keys["unexpiring_public_key#{keyfile_nr}_path".to_sym])
 end
 
-Given /^a path to a public key$/ do
-  @public_key = @keys[:unexpiring_public_key1_path]
+Given /^the path to the public key (.*)$/ do |key_nr|
+  @key = @keys["unexpiring_public_key#{key_nr}_path".to_sym]
+end
+
+Given /^I set (.*) as a password$/ do |password|
+  @keyring.password = password
+end
+
+When /^I get the password$/ do
+  @result = @keyring.password
+end
+
+When /^I export key (.*)$/ do |key|
+  @key = @keyring.export_key(key)
+end
+
+Then /^the key should be the same as keyfile (.*)$/ do |keyfile_nr|
+  @key.to_s.should == File.read(@keys["unexpiring_public_key#{keyfile_nr}_path".to_sym])
+end
+
+Then /^the key should be empty$/ do
+  @key.to_s.should == ''
 end

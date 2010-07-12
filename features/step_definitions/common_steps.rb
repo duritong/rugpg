@@ -9,6 +9,20 @@ After do
   FileUtils.rm_rf(@tmp_gnupghome)
 end
 
+Then /^it should be found$/ do
+  @found.should == true
+end
+
+Then /^it should not be found$/ do
+  @found.should == false
+end
+
+Then /^the result should be (.*)$/ do |result|
+  result = "" if result == 'empty'
+  @result.to_s.should == result
+end
+
+#### default stuff
 
 Given /^this project is active project folder/ do
   @active_project_folder = File.expand_path(File.dirname(__FILE__) + "/../..")

@@ -11,7 +11,25 @@ Feature: Managing a GnuPG keyring
     
   Scenario: Importing a public key from file
   	Given an empty keyring
-    And a path to a public key
+    And the path to the public key 1
     When I import this key
     Then the key should be in the keyring
     
+  Scenario: Importing a public key from storage numbr
+  	Given an empty keyring
+  	And I import keyfile 2
+  	Then I should have 1 public key in the keyring
+
+  Scenario: Exporting a public key
+  	Given an empty keyring
+  	And a public key
+  	And I import keyfile 1
+    When I export key <unexpiring.testkey@rugpg.local>
+    Then the key should be the same as keyfile 1
+
+  Scenario: Exporting a nonexisting public key
+  	Given an empty keyring
+  	And a public key
+  	And I import keyfile 1
+    When I export key <second.unexpiring.testkey@rugpg.local>
+    Then the key should be empty

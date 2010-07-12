@@ -18,3 +18,15 @@ Feature: Working with a GnuPG keyring
     When I create a RuGPG instance
     Then location should be used
     
+  Scenario: Setting a password
+  	Given an empty keyring
+  	And I set foobar as a password
+  	When I get the password
+  	Then the result should be foobar
+
+  Scenario: Setting a password
+  	Given an empty keyring
+  	And I set foobar as a password
+  	When I get the password
+  	And I get the password
+  	Then the result should be empty

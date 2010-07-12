@@ -19,9 +19,12 @@ Before do
   @keys = {
     :unexpiring_public_key1_path => File.join(@test_data_home,'unexpiring.testkey1.pub'),
     :unexpiring_secret_key1_path => File.join(@test_data_home,'unexpiring.testkey1.priv'),
-    :unexpiring_public_key_passphrase => 'rugpgtest',
+    :unexpiring_public_key1_passphrase => 'rugpgtest',
     :unexpiring_public_key2_path => File.join(@test_data_home,'unexpiring.testkey2.pub'),
     :unexpiring_secret_key2_path => File.join(@test_data_home,'unexpiring.testkey2.priv'),
     :unexpiring_public_key2_passphrase => 'rugpgtest',
+    :unexpiring_public_key2old_path => File.join(@test_data_home,'unexpiring.testkey2old.pub'),
+    :unexpiring_secret_key2old_path => File.join(@test_data_home,'unexpiring.testkey2old.priv'),
+    :unexpiring_public_key2old_passphrase => 'rugpgtest',
   }
 end

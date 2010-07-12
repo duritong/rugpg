@@ -1,6 +1,14 @@
+require 'rugpg/keyring/querying'
+require 'rugpg/keyring/management'
 module RuGPG
   class Keyring
+    
+    include KeyringManagement
+    include KeyringQuerying
+    
+    
     attr_reader :location
+    attr_writer :password
     
     # Prepares a keyring at the given +location+
     # If +location+ is nil, the GNUPGHOME environment variable will be used.
@@ -14,38 +22,12 @@ module RuGPG
       end
     end
     
-    # Lists all public keys matching +pattern+.
-    # # Returns an array of GPGME::GpgKey's
-    def list_public_keys(pattern='')
-      GPGME.list_keys(pattern)
-    end
-    
-    # Lists all secret keys matching +pattern+.
-    # Returns an array of GPGME::GpgKey's
-    def list_secret_keys(pattern='')
-      GPGME.list_keys(pattern,true)
-    end
-
-    # Lists all public and secret keys matching +pattern+.
-    # Returns an array of GPGME::GpgKey's
-    def list_all_keys(pattern='')
-      list_public_keys|list_secret_keys
-    end    
-    
-    # Import +keydata+ into public key ring of the list
-    def import_key(keydata)
-      GPGME.import(keydata)
-    end
-    
-    # Import key from +keyfile+
-    def import_key_from_file(keyfile)
-      import_key(File.read(keyfile))
-    end
-    
-    # Checks whether the keyring contains
-    # at least one public key matching +pattern+.
-    def contains_publickey?(pattern)
-      list_public_keys(pattern).size > 0
+    # The idea behind this method is that we delete our reference
+    # on password after it have been read
+    def password
+      result = @password
+      @password = nil
+      result
     end
     
     private
@@ -53,6 +35,12 @@ module RuGPG
       @ctx = GPGME::Ctx.new 
       # feed the passphrase into the Context
       @ctx.set_passphrase_cb(method(:passfunc))
+    end
+    
+    def passfunc(hook, uid_hint, passphrase_info, prev_was_bad, fd)
+      io = IO.for_fd(fd, 'w')
+      io.puts password
+      io.flush
     end
   end
 end
