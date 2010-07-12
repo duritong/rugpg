@@ -1,4 +1,4 @@
 .loadpath
 .project
-features/testdata
-
+features/testdata/*~
+tmp
