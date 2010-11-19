@@ -33,3 +33,9 @@ Feature: Managing a GnuPG keyring
   	And I import keyfile 1
     When I export key <second.unexpiring.testkey@rugpg.local>
     Then the key should be empty
+    
+  Scenario: Generate a new key
+  	Given an empty keyring
+  	When I generate a key for user foobar and email foo@bar.com
+  	And  I query for public key foo@bar.com
+  	Then I should get 1 keys

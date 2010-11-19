@@ -72,3 +72,7 @@ end
 Then /^the key should be empty$/ do
   @key.to_s.should == ''
 end
+
+When /^I generate a key for user (.*) and email (.*)$/ do |user_name,email|
+  @keyring.generate_key(user_name,email,password,{})
+end
