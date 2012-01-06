@@ -19,8 +19,8 @@ Jeweler::Tasks.new do |gem|
   gem.license = "MIT"
   gem.summary = %Q{rugpg is a ruby-wrapper for various gnupg tasks}
   gem.description = %Q{rugpg should help you to deal with various daily gnupg tasks}
-  gem.email = "mh@immerda.ch"
-  gem.authors = ["mh"]
+  gem.email = "peter.meier@immerda.ch"
+  gem.authors = ["duritong"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new

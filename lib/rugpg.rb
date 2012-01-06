@@ -1,4 +1,5 @@
 require 'gpgme'
+require 'rugpg/monkeypatches/gpgme'
 require 'rugpg/utils'
 require 'rugpg/keyring'
 module Rugpg

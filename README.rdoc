@@ -1,6 +1,6 @@
 = rugpg
 
-Rugpg is a wrapper around gpgme, that should ease your daily tasks.
+Rugpg is a wrapper around gpgme, that should ease your daily tasks with gnugp in ruby.
 
 == Contributing to rugpg
  
@@ -14,6 +14,6 @@ Rugpg is a wrapper around gpgme, that should ease your daily tasks.
 
 == Copyright
 
-Copyright (c) 2011 mh. See LICENSE.txt for
+Copyright (c) 2011 duritong. See LICENSE.txt for
 further details.
 
